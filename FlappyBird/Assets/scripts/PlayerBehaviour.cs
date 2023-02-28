@@ -5,25 +5,72 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    private Rigidbody2D rb;
     [SerializeField] private float jumpforce = 8f;
+    [SerializeField] private Animator animator;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip flyAudio;
+
+    private Rigidbody2D rb;
     private LogicScript logicScript;
     private bool birdAlive = true;
-    
+    private bool hasStarted = false;
+    private string flyKeyword = "fly";
+
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         logicScript = GameObject.FindGameObjectWithTag("logicMachine").GetComponent<LogicScript>();
-
     }
 
     private void Update()
     {
-
-        if(Input.GetKeyDown(KeyCode.Space) && birdAlive)
+        if (hasStarted)
         {
-            //rb.AddForce(new Vector2(0, jumpforce),ForceMode2D.Impulse);
-            rb.velocity = Vector2.up * jumpforce; 
+            FlyPath();
+        }
+        else
+        {
+            AwaitFlying();
+        }
+    }
+
+    private void AwaitFlying()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            hasStarted = true;
+            rb.gravityScale = 2;
+            logicScript.StartGame();
+            Fly(true);
+        }
+    }
+    private void FlyPath()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Space) && birdAlive )
+        {
+            Fly(true);
+        }
+        else
+        {
+            Fly(false);
+        }
+    }
+
+    private void Fly(bool isFlying)
+    {
+        if (isFlying)
+        {
+            rb.velocity = Vector2.up * jumpforce;
+            animator.SetBool(flyKeyword, isFlying);
+            audioSource.clip = flyAudio;
+            audioSource.Play();
+            
+        }
+        else
+        {
+            animator.SetBool(flyKeyword, false);
         }
     }
 
@@ -31,5 +78,10 @@ public class PlayerBehaviour : MonoBehaviour
     {
         logicScript.GameOver();
         birdAlive = false;
+    }
+
+    public bool HasStarted()
+    {
+        return hasStarted;
     }
 }

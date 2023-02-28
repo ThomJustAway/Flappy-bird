@@ -13,7 +13,7 @@ public class PipeMiddleBehaviour : MonoBehaviour
     {
         if(collision.gameObject.layer == 3)
         {
-        logicScript.addScore();
+        logicScript.AddScore();
 
         }
     }
