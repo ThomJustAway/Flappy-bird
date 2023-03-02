@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 66121549}
   m_Layer: 3
   m_Name: Bird
-  m_TagString: Untagged
+  m_TagString: player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1492,10 +1492,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pipe: {fileID: 8750293427424538572, guid: b344b10e873baf548a43c4c0f3d9c1f8, type: 3}
-  pipeLong: {fileID: 8750293427424538572, guid: 44f89c1829492254dbc91a39f142348a, type: 3}
+  pipeLong: {fileID: 7318005241720458277, guid: 44f89c1829492254dbc91a39f142348a, type: 3}
+  pipeSide: {fileID: 7839845883735590309, guid: f26a32e16a92db947894fb5ba2c016c9, type: 3}
+  pipeReverse: {fileID: 0}
+  pipes:
+  - name: normalPipe
+    prefab: {fileID: 8750293427424538572, guid: b344b10e873baf548a43c4c0f3d9c1f8, type: 3}
+    chance: 100
+  - name: longPipe
+    prefab: {fileID: 7318005241720458277, guid: 44f89c1829492254dbc91a39f142348a, type: 3}
+    chance: 100
+  - name: sidePipe
+    prefab: {fileID: 7839845883735590309, guid: f26a32e16a92db947894fb5ba2c016c9, type: 3}
+    chance: 100
+  - name: reverseGravityPipe
+    prefab: {fileID: 3917407463118996760, guid: e9d0bfe9184e4e148ac0f2d5733857da, type: 3}
+    chance: 100
   spawnTime: 2
   heightOffset: 2
   playerBehaviour: {fileID: 66121548}
+  logicScript: {fileID: 1442653232}
 --- !u!4 &1470559484
 Transform:
   m_ObjectHideFlags: 0

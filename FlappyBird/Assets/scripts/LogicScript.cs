@@ -16,7 +16,6 @@ public class LogicScript : MonoBehaviour
     [SerializeField] private AudioSource auidoSource;
     private string highScoreKey = "highScore";
     private bool hasPlayedHighScoreAudio = false;
-    [ContextMenu("Increase Score")]
 
     private void Start()
     {
@@ -24,6 +23,7 @@ public class LogicScript : MonoBehaviour
         HighScore.text = "High Score: "+ highScore;
     }
 
+    [ContextMenu("Increase Score")]
 
     public void AddScore()
     {
@@ -36,6 +36,14 @@ public class LogicScript : MonoBehaviour
             auidoSource.Play();
             hasPlayedHighScoreAudio=true;
         }
+    }
+
+    [ContextMenu("Increase 20 Score")]
+
+    public void Add20Score()
+    {
+        score += 20;
+        scoreText.text = score.ToString();
     }
 
     public int ViewCurrentScore()
