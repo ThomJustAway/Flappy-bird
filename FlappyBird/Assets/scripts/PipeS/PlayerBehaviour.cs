@@ -80,6 +80,21 @@ public class PlayerBehaviour : MonoBehaviour
         birdAlive = false;
     }
 
+    public void ReverseGravity()
+    {
+        jumpforce = jumpforce * -1;
+        Debug.Log(transform.rotation.x);
+        if (transform.rotation.x > 0.5)
+        {
+            
+            transform.rotation = new Quaternion(0, 0, 0, 1);
+        }
+        else
+        {
+            transform.rotation = new Quaternion(180, 0, 0, 1);
+
+        }
+    }
     public bool HasStarted()
     {
         return hasStarted;

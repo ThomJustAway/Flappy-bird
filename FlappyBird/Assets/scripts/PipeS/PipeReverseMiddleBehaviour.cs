@@ -17,7 +17,11 @@ public class PipeReverseMiddleBehaviour : MonoBehaviour
         if (collision.gameObject.layer == 3)
         {
             logicScript.AddScore();
-
+            Rigidbody2D playerRigidbody2D = player.GetComponent<Rigidbody2D>();
+            PlayerBehaviour playerBehaviour = player.GetComponent<PlayerBehaviour>();
+            playerRigidbody2D.gravityScale *= -1;
+            playerBehaviour.ReverseGravity();
+            
         }
     }
 }

@@ -46,6 +46,13 @@ public class LogicScript : MonoBehaviour
         scoreText.text = score.ToString();
     }
 
+    [ContextMenu("Increase 30 score")]
+    public void Add30Score()
+    {
+        score += 30;
+        scoreText.text = score.ToString();
+    }
+
     public int ViewCurrentScore()
     {
         return score;
@@ -72,5 +79,5 @@ public class LogicScript : MonoBehaviour
         gameOverScreen.SetActive(true);
     }
 
-
+    
 }

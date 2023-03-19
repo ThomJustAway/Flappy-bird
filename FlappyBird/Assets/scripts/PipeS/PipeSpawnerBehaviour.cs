@@ -6,6 +6,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
 [System.Serializable]
 class Pipe
 {
@@ -60,23 +61,21 @@ public class PipeSpawnerBehaviour : MonoBehaviour
         counter = 0;
 
         //spawning of pipe
-        Pipe selectedPipe = pipes[selectedRandomPipe()];
+        Pipe selectedPipe = pipes[SelectedRandomPipe()];
         CreatePipe(selectedPipe);
 
     }
 
-    private int selectedRandomPipe()
+    private int SelectedRandomPipe()
     {
         float random = Random.Range(0,101);
         float accumalatedWeight = 0.0f;
-        Debug.Log(random);
         for(int i = 0; i < chance.Length; i++)
         {
             accumalatedWeight+=chance[i];
 
             if (accumalatedWeight >= random)
             {
-                Debug.Log(i);
                 return i;
             }
         }
@@ -91,7 +90,7 @@ public class PipeSpawnerBehaviour : MonoBehaviour
          0.normal pipe
          1.long pipe
          2.side pipe(upward)
-         3.gravity changing pipe
+         3.side pipe(downwards)
          */
         int score = logicScript.ViewCurrentScore();
         if(score >=20 && score <= 30)
@@ -101,13 +100,14 @@ public class PipeSpawnerBehaviour : MonoBehaviour
             chance[2] = 20;
             chance[3] = 20;
         }
-        else if(score>30)
+        else if(score>29)
         {
-            chance[0] = 10;
+            //change this later
+            chance[0] = 0;
             chance[1] = 10;
-            chance[2] = 20;
-            chance[3] = 20;
-            chance[4] = 50;
+            chance[2] = 30;
+            chance[3] = 30;
+            chance[4] = 30;
         }
     }
     private void CreatePipe(Pipe pipeType)
@@ -115,6 +115,6 @@ public class PipeSpawnerBehaviour : MonoBehaviour
         float highestPoint = transform.position.y + pipeType.heightOffSet;
         float lowestPoint = transform.position.y - pipeType.heightOffSet;
         spawnTime = pipeType.spawnTime;
-        Instantiate(pipeType.prefab, new Vector3(transform.position.x, Random.Range(lowestPoint, highestPoint), 0), transform.rotation);
+        Instantiate(pipeType.prefab, new Vector3(transform.position.x, Random.Range(lowestPoint, highestPoint), 0), quaternion.identity);
     }
 }
