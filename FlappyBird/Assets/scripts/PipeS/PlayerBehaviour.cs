@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
@@ -9,13 +11,14 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip flyAudio;
+    [SerializeField] private float rotationSpeed;
 
+    private Vector2 moveMentDirection;
     private Rigidbody2D rb;
     private LogicScript logicScript;
     private bool birdAlive = true;
     private bool hasStarted = false;
     private string flyKeyword = "fly";
-
 
     private void Start()
     {
@@ -33,6 +36,11 @@ public class PlayerBehaviour : MonoBehaviour
         {
             AwaitFlying();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        HandleRotation();
     }
 
     private void AwaitFlying()
@@ -56,6 +64,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Fly(false);
         }
+
     }
 
     private void Fly(bool isFlying)
@@ -66,12 +75,23 @@ public class PlayerBehaviour : MonoBehaviour
             animator.SetBool(flyKeyword, isFlying);
             audioSource.clip = flyAudio;
             audioSource.Play();
-            
+            moveMentDirection = new Vector2(0,1f);
         }
         else
         {
             animator.SetBool(flyKeyword, false);
+            moveMentDirection = new Vector2(0, -1);
         }
+
+    }
+
+    private void HandleRotation()
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(transform.forward, moveMentDirection);
+        Quaternion rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        Debug.Log("The target Rotation is " + targetRotation);
+        Debug.Log("The rotation is " +rotation);
+        rb.MoveRotation(rotation);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
